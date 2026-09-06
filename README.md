@@ -44,23 +44,21 @@ The project was deliberately scoped as a services marketplace (rather than a mor
 
 ## Screenshots
 
-> 📸 **Placeholder — add screenshots here.** Drop image files into a `docs/screenshots/` folder in the repo and update the paths below (or replace this whole section) once captured.
-
 | Login | Customer Dashboard |
 |---|---|
-| ![Login Screen](docs/screenshots/login.png) | ![Customer Dashboard](docs/screenshots/customer-dashboard.png) |
+| ![Login Screen](docs/screenshots/C1_LogInPage(Entry_Point).png) | ![Customer Dashboard](docs/screenshots/C3_Customer_DashBoard.png) |
 
 | Browse Providers | Book & Pay |
 |---|---|
-| ![Browse Providers](docs/screenshots/browse-providers.png) | ![Book and Pay](docs/screenshots/book-and-pay.png) |
+| ![Browse Providers](docs/screenshots/C4_Browse_Providers.png) | ![Book and Pay](docs/screenshots/C6_Book&Pay.png) |
 
 | Admin (Provider) Dashboard | Manage Requests |
 |---|---|
-| ![Admin Dashboard](docs/screenshots/admin-dashboard.png) | ![Manage Requests](docs/screenshots/requests.png) |
+| ![Admin Dashboard](docs/screenshots/A2_Admin_DashBoard.png) | ![Manage Requests](docs/screenshots/A4_RequestOfCustomers.png) |
 
 | SuperAdmin Dashboard | Reports |
 |---|---|
-| ![SuperAdmin Dashboard](docs/screenshots/superadmin-dashboard.png) | ![Reports](docs/screenshots/reports.png) |
+| ![SuperAdmin Dashboard](docs/screenshots/SA2_SuperAdmin_DashBoard.png) | ![Reports](docs/screenshots/SA6_Report(Commision).png) |
 
 <!--
 Add any additional screens below as needed, e.g.:
