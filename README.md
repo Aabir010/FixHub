@@ -441,6 +441,14 @@ A default SuperAdmin account is auto-created on first run:
 
 > ⚠️ **Change this password (or regenerate the hash) before any real/shared deployment** — it is hard-coded for local development convenience only.
 
+For quickly trying out the app without going through Sign Up, the following demo accounts are also available:
+ 
+| Role                | Email / Username             | Password        |
+| ------------------- | ----------------------------- | ---------------- |
+| SuperAdmin           | `superadmin`                  | `FixHub@2026`    |
+| Admin (Provider)     | `test.provider@fixhub.com`    | `Provider@123`   |
+| Customer             | `test.customer@fixhub.com`    | `Customer@123`   |
+
 Customer and Admin (provider) accounts are created through their respective **Sign Up** screens; new provider accounts require SuperAdmin approval before they appear in customer search results.
 
 ---
