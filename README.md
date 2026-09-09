@@ -175,8 +175,6 @@ On startup, `Program.cs` calls `DatabaseInitializer.EnsureSuperAdminReady()`, wh
 
 ## UI Navigation Flow
  
-> **TODO:** This diagram is inferred from the form names in the project structure below — double-check it matches your actual navigation and adjust as needed.
- 
 ```mermaid
 flowchart TD
     Login[frmLogin] --> CustSignup[frmCustomerSignUp]
