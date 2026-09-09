@@ -16,6 +16,7 @@ namespace FixHub.Forms
         private Label navCategories;
         private Label navComplaints;
         private Label navReports;
+        private Label navCoupons;
         private Label navLogout;
 
         private Panel pnlContent;
@@ -46,6 +47,7 @@ namespace FixHub.Forms
             this.navCategories = new Label();
             this.navComplaints = new Label();
             this.navReports = new Label();
+            this.navCoupons = new Label();
             this.navLogout = new Label();
 
             this.pnlContent = new Panel();
@@ -91,6 +93,7 @@ namespace FixHub.Forms
             AddNavItem(this.navCategories, "Categories", 170);
             AddNavItem(this.navComplaints, "Complaints", 210);
             AddNavItem(this.navReports, "Reports", 250);
+            AddNavItem(this.navCoupons, "Coupons", 290);
             AddNavItem(this.navLogout, "Logout", 510);
 
             // ---- Content ----

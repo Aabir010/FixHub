@@ -134,6 +134,12 @@
     <Compile Include="frmManageComplaints.Designer.cs">
       <DependentUpon>frmManageComplaints.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmManageCoupons.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmManageCoupons.Designer.cs">
+      <DependentUpon>frmManageCoupons.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMyBookings.cs" />
     <Compile Include="frmMyBookings.Designer.cs">
       <DependentUpon>frmMyBookings.cs</DependentUpon>

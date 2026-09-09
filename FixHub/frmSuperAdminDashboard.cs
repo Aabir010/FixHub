@@ -19,6 +19,7 @@ namespace FixHub.Forms
             navCategories.Click += (s, e) => OpenCategories();
             navComplaints.Click += (s, e) => OpenComplaints();
             navReports.Click += (s, e) => OpenReports();
+            navCoupons.Click += (s, e) => OpenCoupons();
             navLogout.Click += (s, e) => Logout();
 
             cardPending.Click += (s, e) => OpenManageAdmins();
@@ -128,6 +129,12 @@ WHERE b.Status NOT IN ('Cancelled', 'Declined')");
         {
             var form = new frmReports();
             UIHelper.NavigateTo(this, form);
+        }
+
+        private void OpenCoupons()
+        {
+            var form = new frmManageCoupons();
+            UIHelper.ShowModal(this, form);
         }
 
         private void Logout()
