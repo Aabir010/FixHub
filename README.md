@@ -10,17 +10,19 @@ This project was built as the final project for **CSC 2210 — Object-Oriented P
 
 ## Table of Contents
 
+- [Team](#team)
 - [Overview](#overview)
 - [Screenshots](#screenshots)
 - [Key Features](#key-features)
 - [Tech Stack](#tech-stack)
 - [System Architecture](#system-architecture)
+- [UI Navigation Flow](#ui-navigation-flow)
 - [Project Structure](#project-structure)
 - [Database Schema](#database-schema)
 - [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation & Setup](#installation--setup)
-  - [Default Login Credentials](#default-login-credentials)
+  * [Prerequisites](#prerequisites)
+  * [Installation & Setup](#installation--setup)
+  * [Default Login Credentials](#default-login-credentials)
 - [Usage Guide](#usage-guide)
 - [Security Notes](#security-notes)
 - [Known Limitations](#known-limitations)
@@ -28,6 +30,16 @@ This project was built as the final project for **CSC 2210 — Object-Oriented P
 - [Contributing](#contributing)
 - [License](#license)
 
+---
+
+## Team
+ 
+| Name | Student ID | Contribution |
+| ---- | ---------- | ------------- |
+| Awlad Hossain Abir | 24-60107-3 | e.g. Customer module, database schema (50%) |
+| Sheikh Al Fattah | 24-60103-3 | e.g. Admin side, reports (25%) |
+| Adib Rahman | 24-57433-2 | e.g. SuperAdmin side, testing (25%) |
+ 
 ---
 
 ## Overview
@@ -44,22 +56,41 @@ The project was deliberately scoped as a services marketplace (rather than a mor
 
 ## Screenshots
 
-| Login | Customer Dashboard |
-|---|---|
-| ![Login Screen](docs/screenshots/C1_LogInPage(Entry_Point).png) | ![Customer Dashboard](docs/screenshots/C3_Customer_DashBoard.png) |
-
-| Browse Providers | Book & Pay |
-|---|---|
-| ![Browse Providers](docs/screenshots/C4_Browse_Providers.png) | ![Book and Pay](docs/screenshots/C6_Book&Pay.png) |
-
-| Admin (Provider) Dashboard | Manage Requests |
-|---|---|
-| ![Admin Dashboard](docs/screenshots/A2_Admin_DashBoard.png) | ![Manage Requests](docs/screenshots/A4_RequestOfCustomers.png) |
-
-| SuperAdmin Dashboard | Reports |
-|---|---|
-| ![SuperAdmin Dashboard](docs/screenshots/SA2_SuperAdmin_DashBoard.png) | ![Reports](docs/screenshots/SA6_Report(Commision).png) |
-
+### Customer
+ 
+| Login | Sign Up |
+| ----- | ------- |
+| ![Login screen](docs/screenshots/C1_LogInPage(Entry_Point).png) | ![Customer sign up](docs/screenshots/C2_Customer_SignUp.png) |
+ 
+| Customer Dashboard | Browse Providers |
+| ------------------- | ----------------- |
+| ![Customer dashboard](docs/screenshots/C3_Customer_DashBoard.png) | ![Browse providers](docs/screenshots/C4_Browse_Providers.png) |
+ 
+| Provider Profile | Book & Pay |
+| ----------------- | ---------- |
+| ![Provider profile](docs/screenshots/C5_Providers_Profile.png) | ![Book and pay](docs/screenshots/C6_Book%26Pay.png) |
+ 
+| My Bookings | Leave a Review |
+| ----------- | --------------- |
+| ![My bookings](docs/screenshots/C7_Customer_Bookings.png) | ![Leave a review](docs/screenshots/C8_Leave_Review.png) |
+ 
+### Admin (Service Provider)
+ 
+| Admin Dashboard | Manage Requests |
+| ---------------- | ---------------- |
+| ![Admin dashboard](docs/screenshots/A2_Admin_DashBoard.png) | ![Manage requests](docs/screenshots/A4_RequestOfCustomers.png) |
+ 
+### SuperAdmin
+ 
+| SuperAdmin Dashboard | Manage Admins |
+| ---------------------- | -------------- |
+| ![SuperAdmin dashboard](docs/screenshots/SA2_SuperAdmin_DashBoard.png) | ![Manage admins](docs/screenshots/SA3_ManageAdmin.png) |
+ 
+| Reports (Commission) |
+| ---------------------- |
+| ![Reports and commission](docs/screenshots/SA6_Report(Commision).png) |
+ 
+---
 <!--
 Add any additional screens below as needed, e.g.:
 ![Leave a Review](docs/screenshots/leave-review.png)
@@ -142,6 +173,39 @@ On startup, `Program.cs` calls `DatabaseInitializer.EnsureSuperAdminReady()`, wh
 
 ---
 
+## UI Navigation Flow
+ 
+> **TODO:** This diagram is inferred from the form names in the project structure below — double-check it matches your actual navigation and adjust as needed.
+ 
+```mermaid
+flowchart TD
+    Login[frmLogin] --> CustSignup[frmCustomerSignUp]
+    Login --> AdminSignup[frmAdminSignUp]
+    Login --> SALogin[frmSuperAdminLogin]
+    Login --> CustDash[frmCustomerDashboard]
+    Login --> AdminDash[frmAdminDashboard]
+ 
+    CustDash --> Browse[frmBrowseProviders]
+    Browse --> Profile[frmProviderProfile]
+    Profile --> BookPay[frmBookAndPay]
+    CustDash --> MyBookings[frmMyBookings]
+    MyBookings --> BookingDetails[frmBookingDetails]
+    BookingDetails --> LeaveReview[frmLeaveReview]
+    CustDash --> CustAccount[frmCustomerAccount]
+ 
+    AdminDash --> Requests[frmRequests]
+    AdminDash --> AdminProfile[frmAdminProfile]
+    AdminDash --> AdminAccount[frmAdminAccount]
+ 
+    SALogin --> SADash[frmSuperAdminDashboard]
+    SADash --> ManageAdmins[frmManageAdmins]
+    SADash --> ManageCategories[frmManageCategories]
+    SADash --> ManageComplaints[frmManageComplaints]
+    SADash --> Reports[frmReports]
+```
+ 
+---
+
 ## Project Structure
 
 ```
@@ -191,31 +255,146 @@ FixHub/
 ## Database Schema
 
 The database (`FixHubDb`) is created and versioned via [`database/schema.sql`](database/schema.sql), which is safe to re-run (all statements are guarded with `IF NOT EXISTS` checks).
-
+ 
 **Core tables:**
-
-| Table | Purpose |
-|---|---|
-| `ServiceCategories` | Lookup table for service types (Plumbing, Electrical, Cleaning, AC Repair, ...) |
-| `Customers` | Customer accounts and profile info |
-| `Admins` | Service provider accounts — category, pricing, approval/suspension state, rating |
-| `Bookings` | Service requests linking a customer to a provider, with a status state machine |
-| `Payments` | Payment amount, commission split, method, and status per booking |
-| `Reviews` | 1–5 star ratings and comments left by customers |
-| `SuperAdmins` | Platform-owner accounts |
-| `Complaints` | Customer complaints tied to a booking, with resolution tracking |
-| `Coupons` | Discount codes with usage limits and expiry |
-
+ 
+| Table               | Key Columns                                                                                              | Purpose                                                                          |
+| ------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `ServiceCategories` | `CategoryId` PK, `CategoryName` (unique)                                                                  | Lookup table for service types (Plumbing, Electrical, Cleaning, AC Repair, ...)  |
+| `Customers`         | `CustomerId` PK, `Name`, `Email` (unique), `Phone`, `Address`, `PasswordHash`, `CreatedAt`                 | Customer accounts and profile info                                               |
+| `Admins`            | `AdminId` PK, `CategoryId` FK, `Name`, `Email` (unique), `Phone`, `Price`, `Bio`, `PasswordHash`, `IsApproved`, `IsSuspended`, `IsAvailable`, `Rating`, `CreatedAt` | Service provider accounts — category, pricing, approval/suspension state, rating |
+| `Bookings`          | `BookingId` PK, `CustomerId` FK, `AdminId` FK, `ServiceName`, `ScheduledDate`, `Address`, `Status` (checked), `CreatedAt` | Service requests linking a customer to a provider, with a status state machine   |
+| `Payments`          | `PaymentId` PK, `BookingId` FK, `Amount`, `CommissionAmount`, `PaymentStatus`, `PaymentMethod`, `CreatedAt` | Payment amount, commission split, method, and status per booking                 |
+| `Reviews`           | `ReviewId` PK, `BookingId` FK, `CustomerId` FK, `AdminId` FK, `Rating` (1–5, checked), `Comment`, `CreatedAt` | Ratings and comments left by customers, linked back to both the booking and the provider |
+| `SuperAdmins`       | `SuperAdminId` PK, `Username` (unique), `PasswordHash`, `CreatedAt`                                        | Platform-owner accounts                                                          |
+| `Complaints`        | `ComplaintId` PK, `BookingId` FK, `Description`, `Status`, `ResolutionNotes`, `ResolvedBySuperAdminId`, `ResolvedAt`, `CreatedAt` | Customer complaints tied to a booking, with resolution tracking                  |
+| `Coupons`           | `CouponId` PK, `Code` (unique), `DiscountPercent`, `ExpiryDate`, `UsageLimit`, `UsedCount`, `IsActive`     | Discount codes with usage limits and expiry (applied at checkout, not stored as a booking FK) |
+ 
 **Helper views:**
+ 
 - `vw_ProviderDetails` — providers joined with category name and completed-job count
 - `vw_BookingDetails` — bookings joined with customer, provider, and payment info
-
+```mermaid
+erDiagram
+    ServiceCategories ||--o{ Admins : "CategoryId"
+    Customers ||--o{ Bookings : "CustomerId"
+    Admins ||--o{ Bookings : "AdminId"
+    Bookings ||--o{ Payments : "BookingId"
+    Bookings ||--o{ Reviews : "BookingId"
+    Customers ||--o{ Reviews : "CustomerId"
+    Admins ||--o{ Reviews : "AdminId"
+    Bookings ||--o{ Complaints : "BookingId"
+ 
+    ServiceCategories {
+        int CategoryId PK
+        string CategoryName
+    }
+    Customers {
+        int CustomerId PK
+        string Name
+        string Email
+        string Phone
+        string Address
+        string PasswordHash
+        datetime CreatedAt
+    }
+    Admins {
+        int AdminId PK
+        int CategoryId FK
+        string Name
+        string Email
+        string Phone
+        decimal Price
+        string Bio
+        string PasswordHash
+        bool IsApproved
+        bool IsSuspended
+        bool IsAvailable
+        decimal Rating
+        datetime CreatedAt
+    }
+    Bookings {
+        int BookingId PK
+        int CustomerId FK
+        int AdminId FK
+        string ServiceName
+        datetime ScheduledDate
+        string Address
+        string Status
+        datetime CreatedAt
+    }
+    Payments {
+        int PaymentId PK
+        int BookingId FK
+        decimal Amount
+        decimal CommissionAmount
+        string PaymentStatus
+        string PaymentMethod
+        datetime CreatedAt
+    }
+    Reviews {
+        int ReviewId PK
+        int BookingId FK
+        int CustomerId FK
+        int AdminId FK
+        int Rating
+        string Comment
+        datetime CreatedAt
+    }
+    Complaints {
+        int ComplaintId PK
+        int BookingId FK
+        string Description
+        string Status
+        string ResolutionNotes
+        int ResolvedBySuperAdminId
+        datetime ResolvedAt
+        datetime CreatedAt
+    }
+    Coupons {
+        int CouponId PK
+        string Code
+        decimal DiscountPercent
+        date ExpiryDate
+        int UsageLimit
+        int UsedCount
+        bool IsActive
+    }
+    SuperAdmins {
+        int SuperAdminId PK
+        string Username
+        string PasswordHash
+        datetime CreatedAt
+    }
+```
+ 
+> **Note:** `Coupons` has no foreign key column on `Bookings` — coupon codes are validated and applied at checkout time (discount reflected in `Payments.Amount`) rather than stored as a direct relationship. `Complaints.ResolvedBySuperAdminId` is populated by application logic but is not an enforced foreign key in the schema.
+ 
 **Booking status flow:**
+ 
 ```
 Pending → Accepted → In Progress → Completed
                  └──→ Declined
 Pending/Accepted → Cancelled
 ```
+ 
+**Sample reporting query:**
+ 
+Used by the SuperAdmin Reports screen — a multi-table `JOIN` combined with `GROUP BY` and the `SUM` aggregate function to calculate total commission earned per service category from completed bookings:
+ 
+```sql
+SELECT
+    ISNULL(c.CategoryName, 'Other') AS CategoryName,
+    ISNULL(SUM(p.CommissionAmount), 0) AS TotalCommission
+FROM Bookings b
+JOIN Payments p ON b.BookingId = p.BookingId
+JOIN Admins a ON b.AdminId = a.AdminId
+LEFT JOIN ServiceCategories c ON a.CategoryId = c.CategoryId
+WHERE b.Status = 'Completed'
+GROUP BY c.CategoryName
+ORDER BY TotalCommission DESC;
+```
+ 
 
 ---
 
